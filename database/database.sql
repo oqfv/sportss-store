@@ -488,3 +488,57 @@ $$;
 
 grant execute on function get_store_stats() to authenticated;
 grant execute on function is_admin() to anon, authenticated;
+
+-- ---------------------------------------------------------
+-- SAMPLE DATA
+-- ---------------------------------------------------------
+
+insert into category (name, description, icon) values
+('Football',   'Balls, boots, shin guards and goalkeeper gear',  'images/football.svg'),
+('Basketball', 'Basketballs, hoops, shoes and training equipment', 'images/basketball.svg'),
+('Tennis',     'Rackets, balls, strings and bags',                'images/tennis.svg'),
+('Fitness',    'Dumbbells, mats, resistance bands and more',      'images/fitness.svg'),
+('Swimming',   'Goggles, caps, swimsuits and training aids',      'images/swimming.svg');
+
+insert into product (category_id, name, brand, description, price, stock, image_url) values
+-- Football (1)
+(1, 'Pro Match Football Size 5',    'Adidas',  'FIFA quality match ball with thermally bonded panels for a true flight and good touch.', 35.00, 40, 'images/football.svg'),
+(1, 'Training Football Size 4',     'Nike',    'Durable machine-stitched ball for daily training, ideal for juniors.',                 18.50, 60, 'images/football.svg'),
+(1, 'Firm Ground Football Boots',   'Puma',    'Lightweight synthetic upper with conical studs for firm natural grass.',             79.99, 15, 'images/football.svg'),
+(1, 'Shin Guards with Ankle Sock',  'Nike',    'Low-profile shin guards with a compression sleeve that keeps them in place.',         14.99, 3,  'images/football.svg'),
+(1, 'Goalkeeper Gloves',            'Reusch',  'Latex palm with finger protection for confident catching in all weather.',           42.00, 12, 'images/football.svg'),
+(1, 'Portable Training Goal Set',   'Kipsta',  'Two pop-up goals, 1.5m wide, fold flat into a carry bag.',                          55.00, 0,  'images/football.svg'),
+-- Basketball (2)
+(2, 'Official Size 7 Basketball',   'Spalding','Composite leather indoor/outdoor ball with deep channels for grip.',                 29.99, 35, 'images/basketball.svg'),
+(2, 'Outdoor Rubber Basketball',    'Wilson',  'Tough rubber cover made for street courts and asphalt.',                             19.99, 50, 'images/basketball.svg'),
+(2, 'Adjustable Basketball Hoop',   'Lifetime','Portable hoop with height adjustment from 2.3m to 3.05m and a fillable base.',       249.00, 4,  'images/basketball.svg'),
+(2, 'High-Top Basketball Shoes',    'Nike',    'Ankle support, cushioned midsole and herringbone traction.',                         119.00, 10, 'images/basketball.svg'),
+(2, 'Ball Pump with Needles',       'Wilson',  'Dual-action hand pump, works for basketballs, footballs and volleyballs.',           8.99,  80, 'images/basketball.svg'),
+-- Tennis (3)
+(3, 'Graphite Tennis Racket',       'Babolat', 'Pre-strung 300g racket for intermediate players, good mix of power and control.',    129.00, 8,  'images/tennis.svg'),
+(3, 'Beginner Aluminium Racket',    'Head',    'Light and forgiving racket, perfect for first lessons.',                             39.00, 25, 'images/tennis.svg'),
+(3, 'Tennis Balls (Can of 4)',      'Wilson',  'Pressurised all-court balls with consistent bounce.',                                7.50,  120,'images/tennis.svg'),
+(3, 'Polyester Racket String',      'Luxilon', '12m set of 1.25mm polyester string for spin and durability.',                        16.00, 2,  'images/tennis.svg'),
+(3, 'Tennis Racket Bag (6 rackets)','Babolat', 'Thermo compartment, shoe pocket and backpack straps.',                               65.00, 7,  'images/tennis.svg'),
+-- Fitness (4)
+(4, 'Adjustable Dumbbell 2-24kg',   'Bowflex', 'Dial system replaces 15 pairs of dumbbells, saves space at home.',                   299.00, 5,  'images/fitness.svg'),
+(4, 'Yoga Mat 6mm',                 'Domyos',  'Non-slip textured mat with carry strap.',                                            22.00, 45, 'images/fitness.svg'),
+(4, 'Resistance Bands Set (5)',     'Fit Simplify','Five latex bands from extra light to extra heavy with a pouch.',                12.99, 70, 'images/fitness.svg'),
+(4, 'Kettlebell 16kg',              'Domyos',  'Cast iron kettlebell with a wide handle for two-hand swings.',                       45.00, 0,  'images/fitness.svg'),
+(4, 'Speed Jump Rope',              'Rogue',   'Steel cable rope with ball bearings, adjustable length.',                            15.00, 30, 'images/fitness.svg'),
+(4, 'Foam Roller 45cm',             'TriggerPoint','Firm foam roller for recovery and muscle release.',                             27.50, 18, 'images/fitness.svg'),
+-- Swimming (5)
+(5, 'Anti-Fog Swimming Goggles',    'Speedo',  'UV protection, anti-fog coating and adjustable nose bridge.',                        19.00, 55, 'images/swimming.svg'),
+(5, 'Silicone Swim Cap',            'Arena',   'Comfortable silicone cap that protects hair from chlorine.',                         9.50,  90, 'images/swimming.svg'),
+(5, 'Kickboard',                    'Speedo',  'EVA foam kickboard for leg training.',                                               14.00, 22, 'images/swimming.svg'),
+(5, 'Men''s Swim Jammer',           'Arena',   'Chlorine resistant fabric, knee-length for training.',                               34.00, 14, 'images/swimming.svg'),
+(5, 'Women''s One-Piece Swimsuit',  'Speedo',  'Endurance+ fabric that lasts 20x longer than normal swimwear.',                       45.00, 9,  'images/swimming.svg'),
+(5, 'Swim Fins (Short Blade)',      'Finis',   'Short blade fins for kick strength and ankle flexibility.',                          32.00, 1,  'images/swimming.svg');
+
+-- ---------------------------------------------------------
+-- MAKING AN ADMIN
+-- 1. register normally on the website
+-- 2. run this (with your email) in the SQL editor:
+--
+--    update customers set is_admin = true where email = 'you@example.com';
+-- ---------------------------------------------------------
