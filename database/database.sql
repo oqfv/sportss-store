@@ -194,7 +194,9 @@ create trigger trg_items_total
     after insert or delete on order_items
     for each row execute function recalc_order_total();
 
--- if an item is removed from an order, give the stock back
+-- if a single item is removed from an open order, give the stock back.
+-- (when the whole order is deleted the parent row is already gone here,
+--  so the stock is handled by orders_before_delete instead -> no double counting)
 create or replace function order_items_after_delete()
 returns trigger
 language plpgsql
@@ -202,8 +204,12 @@ security definer
 set search_path = public
 as $$
 begin
-    update product set stock = stock + old.quantity
-    where product_id = old.product_id;
+    if exists (select 1 from orders
+               where order_id = old.order_id
+                 and status in ('pending','paid')) then
+        update product set stock = stock + old.quantity
+        where product_id = old.product_id;
+    end if;
     return old;
 end;
 $$;
@@ -211,6 +217,28 @@ $$;
 create trigger trg_items_after_delete
     after delete on order_items
     for each row execute function order_items_after_delete();
+
+-- deleting an order that was never shipped/cancelled returns its stock
+create or replace function orders_before_delete()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    if old.status in ('pending','paid') then
+        update product p
+        set stock = p.stock + oi.quantity
+        from order_items oi
+        where oi.order_id = old.order_id and oi.product_id = p.product_id;
+    end if;
+    return old;
+end;
+$$;
+
+create trigger trg_orders_before_delete
+    before delete on orders
+    for each row execute function orders_before_delete();
 
 -- rules for updating an order:
 --  * customers may only cancel their own pending orders
