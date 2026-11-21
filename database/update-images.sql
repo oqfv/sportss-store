@@ -34,5 +34,4 @@ update product set image_url = 'images/products/23.jpg' where name = 'Anti-Fog S
 update product set image_url = 'images/products/24.jpg' where name = 'Silicone Swim Cap';
 update product set image_url = 'images/products/25.jpg' where name = 'Kickboard';
 update product set image_url = 'images/products/26.jpg' where name = 'Men''s Swim Jammer';
-update product set image_url = 'images/products/27.jpg' where name = 'Women''s One-Piece Swimsuit';
 update product set image_url = 'images/products/28.jpg' where name = 'Swim Fins (Short Blade)';

@@ -28,5 +28,4 @@ update product set price = 69.00 where name = 'Anti-Fog Swimming Goggles';
 update product set price = 34.00 where name = 'Silicone Swim Cap';
 update product set price = 49.00 where name = 'Kickboard';
 update product set price = 124.00 where name = 'Men''s Swim Jammer';
-update product set price = 164.00 where name = 'Women''s One-Piece Swimsuit';
 update product set price = 114.00 where name = 'Swim Fins (Short Blade)';

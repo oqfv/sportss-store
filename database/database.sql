@@ -535,7 +535,6 @@ insert into product (category_id, name, brand, description, price, stock, image_
 (5, 'Silicone Swim Cap',            'Arena',   'Comfortable silicone cap that protects hair from chlorine.',                         34.00,  90, 'images/products/24.jpg'),
 (5, 'Kickboard',                    'Speedo',  'EVA foam kickboard for leg training.',                                               49.00, 22, 'images/products/25.jpg'),
 (5, 'Men''s Swim Jammer',           'Arena',   'Chlorine resistant fabric, knee-length for training.',                               124.00, 14, 'images/products/26.jpg'),
-(5, 'Women''s One-Piece Swimsuit',  'Speedo',  'Endurance+ fabric that lasts 20x longer than normal swimwear.',                       164.00, 9,  'images/products/27.jpg'),
 (5, 'Swim Fins (Short Blade)',      'Finis',   'Short blade fins for kick strength and ankle flexibility.',                          114.00, 1,  'images/products/28.jpg');
 
 -- ---------------------------------------------------------

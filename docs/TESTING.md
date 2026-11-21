@@ -6,7 +6,7 @@ Save a screenshot for each one in `docs/screenshots/`.
 | # | Test | Steps | Expected result | Screenshot |
 |---|------|-------|-----------------|-----------|
 | 1 | Pages load | Open every page from the menu | No broken pages, no red errors in the console | `01-home.png` |
-| 2 | Products from Supabase | Open Shop | 28 products load; change a price in Supabase and refresh, the new price shows | `02-products.png` |
+| 2 | Products from Supabase | Open Shop | 27 products load; change a price in Supabase and refresh, the new price shows | `02-products.png` |
 | 3 | Category filter | Click a category on Home or pick one in Shop | Only that category is shown | `03-category.png` |
 | 4 | Search by name | Type `ball` | Only matching products | `04-search.png` |
 | 5 | Smart search | `nike`, category Football, price 40–200 AED, In stock only | Combined filters work, URL keeps the filters | `05-smart-search.png` |
