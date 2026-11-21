@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage store - SportZone</title>
+    <link rel="icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container">
+        <h1 class="page-title">Manage store</h1>
+        <div id="admin-msg" class="message"></div>
+
+        <div id="admin-area" class="hidden">
+            <section class="panel">
+                <h2 class="section-title" id="form-title">Add a product</h2>
+                <form id="product-form" novalidate>
+                    <input type="hidden" name="product_id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="f-name">Name</label>
+                            <input type="text" id="f-name" name="pname" maxlength="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="f-brand">Brand</label>
+                            <input type="text" id="f-brand" name="brand" maxlength="60">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="f-category">Category</label>
+                            <select id="f-category" name="category_id" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="f-image">Image URL</label>
+                            <input type="text" id="f-image" name="image_url" placeholder="images/football.svg or https://...">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="f-price">Price ($)</label>
+                            <input type="number" id="f-price" name="price" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="f-stock">Stock</label>
+                            <input type="number" id="f-stock" name="stock" min="0" step="1" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-desc">Description</label>
+                        <textarea id="f-desc" name="description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn" id="save-btn">Add product</button>
+                    <button type="button" class="btn btn-outline hidden" id="cancel-edit">Cancel edit</button>
+                </form>
+            </section>
+
+            <section class="panel">
+                <h2 class="section-title">Products</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+                        <tbody id="admin-products"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2 class="section-title">All orders</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>#</th><th>Date</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead>
+                        <tbody id="admin-orders"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
