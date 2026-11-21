@@ -866,3 +866,30 @@ th {
         padding: 18px;
     }
 }
+
+/* ---------- photos ---------- */
+
+.detail img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #f3f4f6;
+}
+
+.credits-list {
+    list-style: none;
+    font-size: 0.82rem;
+    color: var(--muted);
+    columns: 2;
+    column-gap: 30px;
+}
+
+.credits-list li {
+    padding: 3px 0;
+    break-inside: avoid;
+}
+
+@media (max-width: 720px) {
+    .credits-list {
+        columns: 1;
+    }
+}
