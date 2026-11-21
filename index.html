@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportZone - Sports Equipment Store</title>
+    <link rel="icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Gear up for every game.</h1>
+                <p>Football, basketball, tennis, fitness and swimming equipment from brands you trust, delivered to your door.</p>
+                <a href="products.html" class="btn">Shop now</a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Shop by category</h2>
+                <div class="category-grid" id="category-list">
+                    <p class="loading">Loading categories...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="toolbar">
+                    <h2 class="section-title">New arrivals</h2>
+                    <a href="products.html">View all products →</a>
+                </div>
+                <div class="product-grid" id="featured-list">
+                    <p class="loading">Loading products...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container features">
+                <div class="feature">
+                    <h3>Live stock</h3>
+                    <p>Stock levels come straight from our database, so what you see is what we have.</p>
+                </div>
+                <div class="feature">
+                    <h3>Secure accounts</h3>
+                    <p>Your orders and details are only visible to you.</p>
+                </div>
+                <div class="feature">
+                    <h3>Cash or card</h3>
+                    <p>Pay on delivery or by card, whatever suits you.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
