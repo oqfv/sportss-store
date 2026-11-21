@@ -3,8 +3,8 @@
 // Project Settings -> API in the Supabase dashboard.
 // NEVER put the service_role key in this file - it is visible to everyone.
 
-const SUPABASE_URL = "https://nigsgnjzpgukkqpyaggy.supabase.co";
-const SUPABASE_KEY = "sb_publishable_06h-pKxnqjWvD_o0mtrj6A_r-n_ExV9";
+const SUPABASE_URL = "https://edxhfaijfowwjzaqidse.supabase.co";
+const SUPABASE_KEY = "sb_publishable_cZeIyCPKK9wlXycir6hmdA_6KuA_azo";
 
 let supabaseClient;
 
