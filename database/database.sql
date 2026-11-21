@@ -461,13 +461,15 @@ begin
 
         'sales_by_category', (
             select coalesce(json_agg(t), '[]'::json) from (
-                select c.name, coalesce(sum(oi.quantity * oi.unit_price), 0) as revenue,
-                       coalesce(sum(oi.quantity), 0) as items
+                select c.name,
+                       coalesce(sum(case when o.order_id is not null
+                                         then oi.quantity * oi.unit_price end), 0) as revenue,
+                       coalesce(sum(case when o.order_id is not null
+                                         then oi.quantity end), 0) as items
                 from category c
                 left join product p      on p.category_id = c.category_id
                 left join order_items oi on oi.product_id = p.product_id
-                left join orders o       on o.order_id = oi.order_id
-                where o.order_id is null or o.status <> 'cancelled'
+                left join orders o       on o.order_id = oi.order_id and o.status <> 'cancelled'
                 group by c.name
                 order by revenue desc
             ) t
