@@ -497,46 +497,46 @@ grant execute on function is_admin() to anon, authenticated;
 -- ---------------------------------------------------------
 
 insert into category (name, description, icon) values
-('Football',   'Balls, boots, shin guards and goalkeeper gear',  'images/football.svg'),
-('Basketball', 'Basketballs, hoops, shoes and training equipment', 'images/basketball.svg'),
-('Tennis',     'Rackets, balls, strings and bags',                'images/tennis.svg'),
-('Fitness',    'Dumbbells, mats, resistance bands and more',      'images/fitness.svg'),
-('Swimming',   'Goggles, caps, swimsuits and training aids',      'images/swimming.svg');
+('Football',   'Balls, boots, shin guards and goalkeeper gear',  'images/categories/football.jpg'),
+('Basketball', 'Basketballs, hoops, shoes and training equipment', 'images/categories/basketball.jpg'),
+('Tennis',     'Rackets, balls, strings and bags',                'images/categories/tennis.jpg'),
+('Fitness',    'Dumbbells, mats, resistance bands and more',      'images/categories/fitness.jpg'),
+('Swimming',   'Goggles, caps, swimsuits and training aids',      'images/categories/swimming.jpg');
 
 insert into product (category_id, name, brand, description, price, stock, image_url) values
 -- Football (1)
-(1, 'Pro Match Football Size 5',    'Adidas',  'FIFA quality match ball with thermally bonded panels for a true flight and good touch.', 129.00, 40, 'images/football.svg'),
-(1, 'Training Football Size 4',     'Nike',    'Durable machine-stitched ball for daily training, ideal for juniors.',                 69.00, 60, 'images/football.svg'),
-(1, 'Firm Ground Football Boots',   'Puma',    'Lightweight synthetic upper with conical studs for firm natural grass.',             294.00, 15, 'images/football.svg'),
-(1, 'Shin Guards with Ankle Sock',  'Nike',    'Low-profile shin guards with a compression sleeve that keeps them in place.',         54.00, 3,  'images/football.svg'),
-(1, 'Goalkeeper Gloves',            'Reusch',  'Latex palm with finger protection for confident catching in all weather.',           154.00, 12, 'images/football.svg'),
-(1, 'Portable Training Goal Set',   'Kipsta',  'Two pop-up goals, 1.5m wide, fold flat into a carry bag.',                          199.00, 0,  'images/football.svg'),
+(1, 'Pro Match Football Size 5',    'Adidas',  'FIFA quality match ball with thermally bonded panels for a true flight and good touch.', 129.00, 40, 'images/products/1.jpg'),
+(1, 'Training Football Size 4',     'Nike',    'Durable machine-stitched ball for daily training, ideal for juniors.',                 69.00, 60, 'images/products/2.jpg'),
+(1, 'Firm Ground Football Boots',   'Puma',    'Lightweight synthetic upper with conical studs for firm natural grass.',             294.00, 15, 'images/products/3.jpg'),
+(1, 'Shin Guards with Ankle Sock',  'Nike',    'Low-profile shin guards with a compression sleeve that keeps them in place.',         54.00, 3,  'images/products/4.jpg'),
+(1, 'Goalkeeper Gloves',            'Reusch',  'Latex palm with finger protection for confident catching in all weather.',           154.00, 12, 'images/products/5.jpg'),
+(1, 'Portable Training Goal Set',   'Kipsta',  'Two pop-up goals, 1.5m wide, fold flat into a carry bag.',                          199.00, 0,  'images/products/6.jpg'),
 -- Basketball (2)
-(2, 'Official Size 7 Basketball',   'Spalding','Composite leather indoor/outdoor ball with deep channels for grip.',                 109.00, 35, 'images/basketball.svg'),
-(2, 'Outdoor Rubber Basketball',    'Wilson',  'Tough rubber cover made for street courts and asphalt.',                             74.00, 50, 'images/basketball.svg'),
-(2, 'Adjustable Basketball Hoop',   'Lifetime','Portable hoop with height adjustment from 2.3m to 3.05m and a fillable base.',       914.00, 4,  'images/basketball.svg'),
-(2, 'High-Top Basketball Shoes',    'Nike',    'Ankle support, cushioned midsole and herringbone traction.',                         434.00, 10, 'images/basketball.svg'),
-(2, 'Ball Pump with Needles',       'Wilson',  'Dual-action hand pump, works for basketballs, footballs and volleyballs.',           34.00,  80, 'images/basketball.svg'),
+(2, 'Official Size 7 Basketball',   'Spalding','Composite leather indoor/outdoor ball with deep channels for grip.',                 109.00, 35, 'images/products/7.jpg'),
+(2, 'Outdoor Rubber Basketball',    'Wilson',  'Tough rubber cover made for street courts and asphalt.',                             74.00, 50, 'images/products/8.jpg'),
+(2, 'Adjustable Basketball Hoop',   'Lifetime','Portable hoop with height adjustment from 2.3m to 3.05m and a fillable base.',       914.00, 4,  'images/products/9.jpg'),
+(2, 'High-Top Basketball Shoes',    'Nike',    'Ankle support, cushioned midsole and herringbone traction.',                         434.00, 10, 'images/products/10.jpg'),
+(2, 'Ball Pump with Needles',       'Wilson',  'Dual-action hand pump, works for basketballs, footballs and volleyballs.',           34.00,  80, 'images/products/11.jpg'),
 -- Tennis (3)
-(3, 'Graphite Tennis Racket',       'Babolat', 'Pre-strung 300g racket for intermediate players, good mix of power and control.',    474.00, 8,  'images/tennis.svg'),
-(3, 'Beginner Aluminium Racket',    'Head',    'Light and forgiving racket, perfect for first lessons.',                             144.00, 25, 'images/tennis.svg'),
-(3, 'Tennis Balls (Can of 4)',      'Wilson',  'Pressurised all-court balls with consistent bounce.',                                29.00,  120,'images/tennis.svg'),
-(3, 'Polyester Racket String',      'Luxilon', '12m set of 1.25mm polyester string for spin and durability.',                        59.00, 2,  'images/tennis.svg'),
-(3, 'Tennis Racket Bag (6 rackets)','Babolat', 'Thermo compartment, shoe pocket and backpack straps.',                               239.00, 7,  'images/tennis.svg'),
+(3, 'Graphite Tennis Racket',       'Babolat', 'Pre-strung 300g racket for intermediate players, good mix of power and control.',    474.00, 8,  'images/products/12.jpg'),
+(3, 'Beginner Aluminium Racket',    'Head',    'Light and forgiving racket, perfect for first lessons.',                             144.00, 25, 'images/products/13.jpg'),
+(3, 'Tennis Balls (Can of 4)',      'Wilson',  'Pressurised all-court balls with consistent bounce.',                                29.00,  120,'images/products/14.jpg'),
+(3, 'Polyester Racket String',      'Luxilon', '12m set of 1.25mm polyester string for spin and durability.',                        59.00, 2,  'images/products/15.jpg'),
+(3, 'Tennis Racket Bag (6 rackets)','Babolat', 'Thermo compartment, shoe pocket and backpack straps.',                               239.00, 7,  'images/products/16.jpg'),
 -- Fitness (4)
-(4, 'Adjustable Dumbbell 2-24kg',   'Bowflex', 'Dial system replaces 15 pairs of dumbbells, saves space at home.',                   1094.00, 5,  'images/fitness.svg'),
-(4, 'Yoga Mat 6mm',                 'Domyos',  'Non-slip textured mat with carry strap.',                                            79.00, 45, 'images/fitness.svg'),
-(4, 'Resistance Bands Set (5)',     'Fit Simplify','Five latex bands from extra light to extra heavy with a pouch.',                49.00, 70, 'images/fitness.svg'),
-(4, 'Kettlebell 16kg',              'Domyos',  'Cast iron kettlebell with a wide handle for two-hand swings.',                       164.00, 0,  'images/fitness.svg'),
-(4, 'Speed Jump Rope',              'Rogue',   'Steel cable rope with ball bearings, adjustable length.',                            54.00, 30, 'images/fitness.svg'),
-(4, 'Foam Roller 45cm',             'TriggerPoint','Firm foam roller for recovery and muscle release.',                             99.00, 18, 'images/fitness.svg'),
+(4, 'Adjustable Dumbbell 2-24kg',   'Bowflex', 'Dial system replaces 15 pairs of dumbbells, saves space at home.',                   1094.00, 5,  'images/products/17.jpg'),
+(4, 'Yoga Mat 6mm',                 'Domyos',  'Non-slip textured mat with carry strap.',                                            79.00, 45, 'images/products/18.jpg'),
+(4, 'Resistance Bands Set (5)',     'Fit Simplify','Five latex bands from extra light to extra heavy with a pouch.',                49.00, 70, 'images/products/19.jpg'),
+(4, 'Kettlebell 16kg',              'Domyos',  'Cast iron kettlebell with a wide handle for two-hand swings.',                       164.00, 0,  'images/products/20.jpg'),
+(4, 'Speed Jump Rope',              'Rogue',   'Steel cable rope with ball bearings, adjustable length.',                            54.00, 30, 'images/products/21.jpg'),
+(4, 'Foam Roller 45cm',             'TriggerPoint','Firm foam roller for recovery and muscle release.',                             99.00, 18, 'images/products/22.jpg'),
 -- Swimming (5)
-(5, 'Anti-Fog Swimming Goggles',    'Speedo',  'UV protection, anti-fog coating and adjustable nose bridge.',                        69.00, 55, 'images/swimming.svg'),
-(5, 'Silicone Swim Cap',            'Arena',   'Comfortable silicone cap that protects hair from chlorine.',                         34.00,  90, 'images/swimming.svg'),
-(5, 'Kickboard',                    'Speedo',  'EVA foam kickboard for leg training.',                                               49.00, 22, 'images/swimming.svg'),
-(5, 'Men''s Swim Jammer',           'Arena',   'Chlorine resistant fabric, knee-length for training.',                               124.00, 14, 'images/swimming.svg'),
-(5, 'Women''s One-Piece Swimsuit',  'Speedo',  'Endurance+ fabric that lasts 20x longer than normal swimwear.',                       164.00, 9,  'images/swimming.svg'),
-(5, 'Swim Fins (Short Blade)',      'Finis',   'Short blade fins for kick strength and ankle flexibility.',                          114.00, 1,  'images/swimming.svg');
+(5, 'Anti-Fog Swimming Goggles',    'Speedo',  'UV protection, anti-fog coating and adjustable nose bridge.',                        69.00, 55, 'images/products/23.jpg'),
+(5, 'Silicone Swim Cap',            'Arena',   'Comfortable silicone cap that protects hair from chlorine.',                         34.00,  90, 'images/products/24.jpg'),
+(5, 'Kickboard',                    'Speedo',  'EVA foam kickboard for leg training.',                                               49.00, 22, 'images/products/25.jpg'),
+(5, 'Men''s Swim Jammer',           'Arena',   'Chlorine resistant fabric, knee-length for training.',                               124.00, 14, 'images/products/26.jpg'),
+(5, 'Women''s One-Piece Swimsuit',  'Speedo',  'Endurance+ fabric that lasts 20x longer than normal swimwear.',                       164.00, 9,  'images/products/27.jpg'),
+(5, 'Swim Fins (Short Blade)',      'Finis',   'Short blade fins for kick strength and ankle flexibility.',                          114.00, 1,  'images/products/28.jpg');
 
 -- ---------------------------------------------------------
 -- MAKING AN ADMIN
