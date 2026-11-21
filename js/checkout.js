@@ -19,13 +19,13 @@ async function prefillFromProfile() {
     const profile = await getMyProfile();
     if (!profile) return;
     const form = document.getElementById("checkout-form");
-    form.name.value = profile.full_name || "";
+    form.fullname.value = profile.full_name || "";
     form.phone.value = profile.phone || "";
     form.address.value = profile.address || "";
 }
 
 function validateCheckout(form) {
-    const name = form.name.value.trim();
+    const name = form.fullname.value.trim();
     const phone = form.phone.value.trim();
     const address = form.address.value.trim();
 
@@ -61,7 +61,7 @@ async function placeOrder(e) {
         }
 
         const shipping = {
-            shipping_name: form.name.value.trim(),
+            shipping_name: form.fullname.value.trim(),
             shipping_phone: form.phone.value.trim(),
             shipping_address: form.address.value.trim(),
             payment_method: form.payment.value
