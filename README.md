@@ -6,8 +6,8 @@ An online store for sports equipment (football, basketball, tennis, fitness and
 swimming). Products, customers and orders are stored in a Supabase (PostgreSQL)
 database, and users register and log in with Supabase Auth.
 
-- **GitHub repository:** https://github.com/USERNAME/sports-store
-- **Live website (GitHub Pages):** https://USERNAME.github.io/sports-store/
+- **GitHub repository:** https://github.com/oqfv/sports-store
+- **Live website (GitHub Pages):** https://oqfv.github.io/sports-store/
 
 ## Team
 
