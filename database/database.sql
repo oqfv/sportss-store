@@ -427,8 +427,7 @@ as $$
 declare
     result json;
 begin
-    -- auth.uid() is null when run from the SQL editor (database owner)
-    if auth.uid() is not null and not is_admin() then
+    if not is_admin() then
         raise exception 'Only admins can view the dashboard';
     end if;
 
@@ -488,6 +487,8 @@ begin
 end;
 $$;
 
+-- functions are executable by PUBLIC by default, so take that away first
+revoke execute on function get_store_stats() from public, anon;
 grant execute on function get_store_stats() to authenticated;
 grant execute on function is_admin() to anon, authenticated;
 
