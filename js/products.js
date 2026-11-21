@@ -5,6 +5,7 @@
 
 const filterForm = document.getElementById("filter-form");
 const sortSelect = document.getElementById("sort");
+let latestRequest = 0;
 
 async function loadCategoryOptions() {
     const { data, error } = await supabaseClient
@@ -96,7 +97,11 @@ async function loadProducts() {
     else if (f.sort === "name-asc") query = query.order("name", { ascending: true });
     else query = query.order("created_at", { ascending: false }).order("product_id", { ascending: false });
 
+    // if the filters changed while we were waiting, a newer request is
+    // already running - ignore this (older) answer so it can't overwrite it
+    const requestId = ++latestRequest;
     const { data, error, count } = await query;
+    if (requestId !== latestRequest) return;
 
     if (error) {
         console.error(error.message);
