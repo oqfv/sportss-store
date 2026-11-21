@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - SportZone</title>
+    <link rel="icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container">
+        <p class="breadcrumb" id="breadcrumb"><a href="products.html">Shop</a></p>
+
+        <div id="detail-msg" class="message"></div>
+        <div id="product-detail">
+            <p class="loading">Loading product...</p>
+        </div>
+
+        <section class="section hidden" id="related-section">
+            <h2 class="section-title">More from this category</h2>
+            <div class="product-grid" id="related-list"></div>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/product-detail.js"></script>
+</body>
+</html>
