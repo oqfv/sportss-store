@@ -9,8 +9,14 @@ const FALLBACK_IMAGE = "images/logo.svg";
 
 // ---------- small helpers ----------
 
+// prices are stored in UAE dirhams
+const CURRENCY = "AED";
+
 function formatPrice(value) {
-    return "$" + Number(value).toFixed(2);
+    return CURRENCY + " " + Number(value).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 }
 
 // avoid putting raw database text straight into innerHTML

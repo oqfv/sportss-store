@@ -53,7 +53,7 @@ create policy "customers read own" on customers for select to authenticated
 
 **What the risk is:** Someone could send requests by hand (for example from the
 browser console) to change another person's order, mark their own order as
-"delivered", or set the price of an item to $0.01.
+"delivered", or set the price of an item to AED 0.01.
 
 **Why it is dangerous:** Customers could get goods for free or interfere with
 other people's orders.
