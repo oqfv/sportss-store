@@ -71,3 +71,184 @@ create index idx_product_category on product(category_id);
 create index idx_orders_customer  on orders(customer_id);
 create index idx_items_order      on order_items(order_id);
 create index idx_items_product    on order_items(product_id);
+
+-- ---------------------------------------------------------
+-- FUNCTIONS & TRIGGERS
+-- ---------------------------------------------------------
+
+-- helper used by the RLS policies: is the logged in user an admin?
+-- security definer so it can read customers without hitting RLS recursion
+create or replace function is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+    select coalesce(
+        (select is_admin from customers where customer_id = auth.uid()),
+        false
+    );
+$$;
+
+-- when someone signs up through Supabase Auth, create their customers row
+create or replace function handle_new_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    insert into customers (customer_id, full_name, email, phone)
+    values (
+        new.id,
+        coalesce(new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)),
+        new.email,
+        new.raw_user_meta_data->>'phone'
+    );
+    return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+    after insert on auth.users
+    for each row execute function handle_new_user();
+
+-- new orders always start as pending with total 0
+-- (the total is calculated from order_items, never trusted from the browser)
+create or replace function orders_before_insert()
+returns trigger
+language plpgsql
+as $$
+begin
+    new.status       := 'pending';
+    new.total_amount := 0;
+    new.order_date   := now();
+    return new;
+end;
+$$;
+
+create trigger trg_orders_before_insert
+    before insert on orders
+    for each row execute function orders_before_insert();
+
+-- before an item is added: take the real price from product,
+-- check that there is enough stock and reduce it
+create or replace function order_items_before_insert()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+    p_price numeric(10,2);
+    p_stock int;
+begin
+    select price, stock into p_price, p_stock
+    from product
+    where product_id = new.product_id
+    for update;
+
+    if not found then
+        raise exception 'Product % does not exist', new.product_id;
+    end if;
+
+    if p_stock < new.quantity then
+        raise exception 'Not enough stock for product % (only % left)', new.product_id, p_stock;
+    end if;
+
+    new.unit_price := p_price;
+
+    update product set stock = stock - new.quantity
+    where product_id = new.product_id;
+
+    return new;
+end;
+$$;
+
+create trigger trg_items_before_insert
+    before insert on order_items
+    for each row execute function order_items_before_insert();
+
+-- keep orders.total_amount in sync with its items
+create or replace function recalc_order_total()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+    oid int;
+begin
+    oid := coalesce(new.order_id, old.order_id);
+    update orders
+    set total_amount = coalesce(
+        (select sum(quantity * unit_price) from order_items where order_id = oid), 0)
+    where order_id = oid;
+    return null;
+end;
+$$;
+
+create trigger trg_items_total
+    after insert or delete on order_items
+    for each row execute function recalc_order_total();
+
+-- if an item is removed from an order, give the stock back
+create or replace function order_items_after_delete()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    update product set stock = stock + old.quantity
+    where product_id = old.product_id;
+    return old;
+end;
+$$;
+
+create trigger trg_items_after_delete
+    after delete on order_items
+    for each row execute function order_items_after_delete();
+
+-- rules for updating an order:
+--  * customers may only cancel their own pending orders
+--  * admins can change the status freely
+--  * nobody can change the owner or the total by hand
+--  * cancelling returns the stock
+create or replace function orders_before_update()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    new.customer_id  := old.customer_id;
+    new.order_date   := old.order_date;
+
+    -- total is only changed by recalc_order_total (runs as definer, no auth.uid check needed)
+    if new.total_amount <> old.total_amount and pg_trigger_depth() <= 1 then
+        new.total_amount := old.total_amount;
+    end if;
+
+    if new.status <> old.status and not is_admin() then
+        if not (old.status = 'pending' and new.status = 'cancelled') then
+            raise exception 'You can only cancel a pending order';
+        end if;
+    end if;
+
+    if new.status = 'cancelled' and old.status <> 'cancelled' then
+        update product p
+        set stock = p.stock + oi.quantity
+        from order_items oi
+        where oi.order_id = old.order_id and oi.product_id = p.product_id;
+    end if;
+
+    return new;
+end;
+$$;
+
+create trigger trg_orders_before_update
+    before update on orders
+    for each row execute function orders_before_update();
