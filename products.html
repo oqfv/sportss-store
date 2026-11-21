@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - SportZone</title>
+    <link rel="icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container">
+        <h1 class="page-title">Shop</h1>
+
+        <div class="shop-layout">
+            <!-- smart search: every filter is sent to Supabase as part of the query -->
+            <aside class="filters">
+                <h2>Search &amp; filter</h2>
+                <form id="filter-form">
+                    <div class="form-group">
+                        <label for="search">Keywords</label>
+                        <input type="search" id="search" name="search" placeholder="e.g. nike ball">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">All categories</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price range ($)</label>
+                        <div class="price-range">
+                            <input type="number" id="min-price" name="min" min="0" step="0.01" placeholder="Min">
+                            <input type="number" id="max-price" name="max" min="0" step="0.01" placeholder="Max">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="availability">Availability</label>
+                        <select id="availability" name="availability">
+                            <option value="">Any</option>
+                            <option value="in">In stock only</option>
+                            <option value="low">Low stock (5 or less)</option>
+                            <option value="out">Out of stock</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">Apply filters</button>
+                    <button type="button" class="btn btn-outline btn-block" id="reset-filters" style="margin-top:8px">Reset</button>
+                </form>
+            </aside>
+
+            <section>
+                <div class="toolbar">
+                    <span class="result-count" id="result-count"></span>
+                    <select id="sort" aria-label="Sort products">
+                        <option value="newest">Newest first</option>
+                        <option value="price-asc">Price: low to high</option>
+                        <option value="price-desc">Price: high to low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                    </select>
+                </div>
+                <div id="msg" class="message"></div>
+                <div class="product-grid" id="product-list">
+                    <p class="loading">Loading products...</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>
