@@ -280,3 +280,134 @@ $$;
 create trigger trg_orders_before_update
     before update on orders
     for each row execute function orders_before_update();
+
+-- customers can edit their own profile but must not be able to
+-- make themselves admin or change their id / email
+create or replace function customers_before_update()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    new.customer_id := old.customer_id;
+    new.created_at  := old.created_at;
+    if not is_admin() then
+        new.is_admin := old.is_admin;
+        new.email    := old.email;
+    end if;
+    return new;
+end;
+$$;
+
+create trigger trg_customers_before_update
+    before update on customers
+    for each row execute function customers_before_update();
+
+-- ---------------------------------------------------------
+-- ROW LEVEL SECURITY
+-- ---------------------------------------------------------
+
+alter table category    enable row level security;
+alter table product     enable row level security;
+alter table customers   enable row level security;
+alter table orders      enable row level security;
+alter table order_items enable row level security;
+
+-- category: everyone can read, only admins can change
+create policy "category read for everyone"
+    on category for select
+    to anon, authenticated
+    using (true);
+
+create policy "category admin insert"
+    on category for insert to authenticated
+    with check (is_admin());
+
+create policy "category admin update"
+    on category for update to authenticated
+    using (is_admin()) with check (is_admin());
+
+create policy "category admin delete"
+    on category for delete to authenticated
+    using (is_admin());
+
+-- product: everyone can read, only admins can change
+create policy "product read for everyone"
+    on product for select
+    to anon, authenticated
+    using (true);
+
+create policy "product admin insert"
+    on product for insert to authenticated
+    with check (is_admin());
+
+create policy "product admin update"
+    on product for update to authenticated
+    using (is_admin()) with check (is_admin());
+
+create policy "product admin delete"
+    on product for delete to authenticated
+    using (is_admin());
+
+-- customers: you only see / edit your own row (admins see all)
+-- rows are created by the handle_new_user trigger, so there is no insert policy
+create policy "customers read own"
+    on customers for select to authenticated
+    using (customer_id = auth.uid() or is_admin());
+
+create policy "customers update own"
+    on customers for update to authenticated
+    using (customer_id = auth.uid())
+    with check (customer_id = auth.uid());
+
+-- orders: a customer can only work with their own orders
+create policy "orders read own"
+    on orders for select to authenticated
+    using (customer_id = auth.uid() or is_admin());
+
+create policy "orders insert own"
+    on orders for insert to authenticated
+    with check (customer_id = auth.uid());
+
+create policy "orders update own"
+    on orders for update to authenticated
+    using (customer_id = auth.uid() or is_admin())
+    with check (customer_id = auth.uid() or is_admin());
+
+create policy "orders delete own pending"
+    on orders for delete to authenticated
+    using ((customer_id = auth.uid() and status = 'pending') or is_admin());
+
+-- order_items: allowed only through an order you own
+create policy "items read own"
+    on order_items for select to authenticated
+    using (
+        is_admin() or exists (
+            select 1 from orders o
+            where o.order_id = order_items.order_id
+              and o.customer_id = auth.uid()
+        )
+    );
+
+create policy "items insert into own pending order"
+    on order_items for insert to authenticated
+    with check (
+        exists (
+            select 1 from orders o
+            where o.order_id = order_items.order_id
+              and o.customer_id = auth.uid()
+              and o.status = 'pending'
+        )
+    );
+
+create policy "items delete from own pending order"
+    on order_items for delete to authenticated
+    using (
+        is_admin() or exists (
+            select 1 from orders o
+            where o.order_id = order_items.order_id
+              and o.customer_id = auth.uid()
+              and o.status = 'pending'
+        )
+    );
