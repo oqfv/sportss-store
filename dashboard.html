@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SportZone</title>
+    <link rel="icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container">
+        <h1 class="page-title">Store dashboard</h1>
+        <div id="dash-msg" class="message"></div>
+
+        <div id="dashboard" class="hidden">
+            <div class="stats-grid">
+                <div class="stat"><div class="label">Products</div><div class="value" id="s-products">0</div></div>
+                <div class="stat"><div class="label">Orders</div><div class="value" id="s-orders">0</div></div>
+                <div class="stat"><div class="label">Total sales</div><div class="value" id="s-sales">$0</div></div>
+                <div class="stat"><div class="label">Customers</div><div class="value" id="s-customers">0</div></div>
+            </div>
+
+            <div class="two-col">
+                <section class="panel">
+                    <h2 class="section-title">Most popular products</h2>
+                    <div id="top-products"></div>
+                </section>
+                <section class="panel">
+                    <h2 class="section-title">Low stock</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Product</th><th>Stock</th></tr></thead>
+                            <tbody id="low-stock"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <div class="two-col">
+                <section class="panel">
+                    <h2 class="section-title">Sales by category</h2>
+                    <div id="by-category"></div>
+                </section>
+                <section class="panel">
+                    <h2 class="section-title">Orders by status</h2>
+                    <div id="by-status"></div>
+                    <p class="meta" style="margin-top:12px">Stock value: <strong id="s-stock-value"></strong></p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
