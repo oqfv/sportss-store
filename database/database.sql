@@ -260,7 +260,7 @@ begin
         new.total_amount := old.total_amount;
     end if;
 
-    if new.status <> old.status and not is_admin() then
+    if new.status <> old.status and auth.uid() is not null and not is_admin() then
         if not (old.status = 'pending' and new.status = 'cancelled') then
             raise exception 'You can only cancel a pending order';
         end if;
@@ -292,7 +292,8 @@ as $$
 begin
     new.customer_id := old.customer_id;
     new.created_at  := old.created_at;
-    if not is_admin() then
+    -- auth.uid() is null when run from the SQL editor (database owner)
+    if auth.uid() is not null and not is_admin() then
         new.is_admin := old.is_admin;
         new.email    := old.email;
     end if;
@@ -426,7 +427,8 @@ as $$
 declare
     result json;
 begin
-    if not is_admin() then
+    -- auth.uid() is null when run from the SQL editor (database owner)
+    if auth.uid() is not null and not is_admin() then
         raise exception 'Only admins can view the dashboard';
     end if;
 
