@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - SportZone</title>
+    <link rel="icon" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="site-header"></header>
+
+    <main class="container">
+        <h1 class="page-title">Checkout</h1>
+        <div id="checkout-msg" class="message"></div>
+
+        <div class="two-col" id="checkout-content">
+            <form class="panel" id="checkout-form" novalidate>
+                <h2 class="section-title">Shipping details</h2>
+
+                <div class="form-group">
+                    <label for="ship-name">Full name</label>
+                    <input type="text" id="ship-name" name="name" maxlength="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="ship-phone">Phone</label>
+                    <input type="tel" id="ship-phone" name="phone" maxlength="20" required>
+                </div>
+                <div class="form-group">
+                    <label for="ship-address">Address</label>
+                    <textarea id="ship-address" name="address" rows="3" maxlength="300" required></textarea>
+                </div>
+                <label class="checkbox form-group">
+                    <input type="checkbox" name="save" checked> Save these details to my profile
+                </label>
+
+                <h2 class="section-title">Payment</h2>
+                <div class="form-group">
+                    <label class="checkbox"><input type="radio" name="payment" value="cash" checked> Cash on delivery</label>
+                    <label class="checkbox"><input type="radio" name="payment" value="card"> Card on delivery</label>
+                </div>
+                <p class="meta" style="margin-bottom:14px">
+                    This is a student project, no real payment is taken and no card details are stored.
+                </p>
+
+                <button type="submit" class="btn btn-block" id="place-order">Place order</button>
+            </form>
+
+            <aside class="panel">
+                <h2 class="section-title">Your order</h2>
+                <ul class="order-items" id="checkout-items"></ul>
+                <div class="summary-line total"><span>Total</span><span id="checkout-total">$0.00</span></div>
+                <a href="cart.html" style="display:block;margin-top:10px">Edit cart</a>
+            </aside>
+        </div>
+    </main>
+
+    <footer id="site-footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>
