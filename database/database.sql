@@ -411,3 +411,78 @@ create policy "items delete from own pending order"
               and o.status = 'pending'
         )
     );
+
+-- ---------------------------------------------------------
+-- ANALYTICS (used by dashboard.html, admins only)
+-- returns only totals, no personal customer data
+-- ---------------------------------------------------------
+create or replace function get_store_stats()
+returns json
+language plpgsql
+stable
+security definer
+set search_path = public
+as $$
+declare
+    result json;
+begin
+    if not is_admin() then
+        raise exception 'Only admins can view the dashboard';
+    end if;
+
+    select json_build_object(
+        'total_products',  (select count(*) from product),
+        'total_customers', (select count(*) from customers),
+        'total_orders',    (select count(*) from orders where status <> 'cancelled'),
+        'total_sales',     (select coalesce(sum(total_amount), 0) from orders where status <> 'cancelled'),
+        'stock_value',     (select coalesce(sum(price * stock), 0) from product),
+
+        'top_products', (
+            select coalesce(json_agg(t), '[]'::json) from (
+                select p.product_id, p.name, sum(oi.quantity) as sold,
+                       sum(oi.quantity * oi.unit_price) as revenue
+                from order_items oi
+                join orders o  on o.order_id = oi.order_id and o.status <> 'cancelled'
+                join product p on p.product_id = oi.product_id
+                group by p.product_id, p.name
+                order by sold desc
+                limit 5
+            ) t
+        ),
+
+        'low_stock', (
+            select coalesce(json_agg(t), '[]'::json) from (
+                select product_id, name, stock
+                from product
+                where stock <= 5
+                order by stock asc, name
+            ) t
+        ),
+
+        'sales_by_category', (
+            select coalesce(json_agg(t), '[]'::json) from (
+                select c.name, coalesce(sum(oi.quantity * oi.unit_price), 0) as revenue,
+                       coalesce(sum(oi.quantity), 0) as items
+                from category c
+                left join product p      on p.category_id = c.category_id
+                left join order_items oi on oi.product_id = p.product_id
+                left join orders o       on o.order_id = oi.order_id
+                where o.order_id is null or o.status <> 'cancelled'
+                group by c.name
+                order by revenue desc
+            ) t
+        ),
+
+        'orders_by_status', (
+            select coalesce(json_object_agg(status, n), '{}'::json) from (
+                select status, count(*) as n from orders group by status
+            ) t
+        )
+    ) into result;
+
+    return result;
+end;
+$$;
+
+grant execute on function get_store_stats() to authenticated;
+grant execute on function is_admin() to anon, authenticated;
