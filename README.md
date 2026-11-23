@@ -13,8 +13,11 @@ database, and users register and log in with Supabase Auth.
 
 | Name | Student ID |
 |------|-----------|
-| Student Name | 000000000 |
-| Student Name | 000000000 |
+| Ahmed Ibrahim Abdalla 202311157
+| Mohammed Shaad 202613227
+| Imran Asrar 202311755
+
+
 
 ## Features
 
